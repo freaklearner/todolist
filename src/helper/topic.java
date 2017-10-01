@@ -25,6 +25,12 @@ public class topic{
 	public ArrayList getSub(){
 		return ar;
 	}
+	public void addTopic(topic t){
+		ar.add(t);
+	}
+	public void setSub(ArrayList<topic> t){
+		ar = t;
+	}
 	public void setSub(topic t){
 		ar.add(t);
 	}
