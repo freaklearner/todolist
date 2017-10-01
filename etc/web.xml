@@ -1,4 +1,13 @@
 <web-app>
+	<servlet>
+		<servlet-name>myservlet</servlet-name>
+		<servlet-class>com.serv</servlet-class>		
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>myservlet</servlet-name>
+		<url-pattern>/test</url-pattern>
+	</servlet-mapping>
+
 	<context-param>
 		<param-name>driver</param-name>
 		<param-value>com.mysql.jdbc.Driver</param-value>
