@@ -1,0 +1,10 @@
+<web-app>
+	<context-param>
+		<param-name>driver</param-name>
+		<param-value>com.mysql.jdbc.Driver</param-value>
+	</context-param>
+	<context-param>
+		<param-name>path</param-name>
+		<param-value>jdbc:mysql://localhost/test</param-value>
+	</context-param>
+</web-app>
