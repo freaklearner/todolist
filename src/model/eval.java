@@ -8,21 +8,22 @@ public class eval{
 	public ArrayList<topic> inital(String driver, String path,int usr) throws SQLException,ClassNotFoundException{
 		Connection con;
 		PreparedStatement st;
-		Statement query;
+		Statement query,subQuery;
 		st = null;
 		query = null;
+		subQuery = null;
 		con = null;
-		ResultSet rs,rs1,rs2;
-		rs = rs1 = rs2 =null;
+		//rs = rs1 = rs2 =null;
 		ArrayList<topic> list = new ArrayList<topic>();
 		try{
 			Class.forName(driver);
 			con = DriverManager.getConnection(path);
 			st = con.prepareStatement("select * from main where userId=?");
 			query = con.createStatement();
+			subQuery = con.createStatement();
 			String q;
 			st.setInt(1,usr);
-			rs = st.executeQuery();
+			ResultSet rs = st.executeQuery();
 			while(rs.next()){
 				topic t = new topic();
 				int id = rs.getInt("topicId");
@@ -30,7 +31,7 @@ public class eval{
 				String txt = rs.getString("txt");
 				t.setData(txt);
 				q = "select * from s_topic where topicId = "+id;
-				rs1 = query.executeQuery(q);
+				ResultSet rs1 = query.executeQuery(q);
 				while(rs1.next()){
 					topic sub1 = new topic();
 					int sid = rs1.getInt("sTopicId");
@@ -38,7 +39,7 @@ public class eval{
 					String stxt = rs1.getString("stxt");
 					sub1.setData(stxt);
 					q = "select * from ss_topic	where sTopicId = "+sid;
-					rs2 = query.executeQuery(q);
+					ResultSet rs2 = subQuery.executeQuery(q);
 					while(rs2.next()){
 						topic sub2 = new topic();
 						int ssid = rs2.getInt("sstopicId");
@@ -55,6 +56,7 @@ public class eval{
 			}
 			rs.close();
 			query.close();
+			subQuery.close();
 			st.close();
 			con.close();
 		}
@@ -69,18 +71,23 @@ public class eval{
 			if(st!=null){
 				st.close();
 			}
-			if(rs!=null){
-				rs.close();
-			}
+			
 			if(query!=null){
 				query.close();
+			}
+			if(subQuery!=null){
+				query.close();
+			}
+			
+			/*if(rs!=null){
+				rs.close();
 			}
 			if(rs1!=null){
 				rs1.close();
 			}
 			if(rs2!=null){
 				rs2.close();
-			}
+			}*/
 			if(con!=null){
 				con.close();
 			}

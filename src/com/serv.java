@@ -6,11 +6,13 @@ import java.util.*;
 import model.*;
 import helper.*;
 import java.io.*;
+import java.sql.*;
 
 public class serv extends HttpServlet{
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		out.println("start");
 		eval ob = new eval();
 		String d = (String)getServletContext().getInitParameter("driver");
 		String p = (String)getServletContext().getInitParameter("path");
@@ -29,7 +31,14 @@ public class serv extends HttpServlet{
 				}
 			}
 		}catch(Exception ex){
-			out.print(ex);
+			out.println(ex);
+			//out.print(ex.getMessage());
+			/*StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			ex.printStackTrace(pw);
+			String sStackTrace = sw.toString(); // stack trace as a string
+			System.out.println(sStackTrace);
+			*/
 		}
 	}
 }
