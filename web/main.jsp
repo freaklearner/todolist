@@ -28,6 +28,7 @@
 			<c:catch var="MyException">
 				<c:forEach var="topic" items="${requestScope['topics']}">
 					<div class="col-xs-12 adder">
+						<input type="hidden" class="track" value="${topic.id}">
 						<div class="col-xs-12 block">
 							<div class="col-xs-8">
 								${topic.data}
@@ -39,6 +40,7 @@
 						</div>
 					<c:forEach var="subone" items="${topic.sub}">
 						<div class="col-xs-12 adder">
+							<input type="hidden" class="track" value="${subone.id}">
 							<div class="col-xs-11 block marg-s">
 								<div class="col-xs-8">
 									${subone.data}
@@ -50,6 +52,7 @@
 							</div>
 						<c:forEach var="subtwo" items="${subone.sub}">
 							<div class="col-xs-12 adder">
+								<input type="hidden" class="track" value="${subtwo.id}">
 								<div class="col-xs-9 block marg-s">
 									<div class="col-xs-10">
 										${subtwo.data}
@@ -76,10 +79,12 @@
 <script>
 	var prt;
 	var cv;
+	var fix;
 	function constructor(){
 		var addNew = document.createElement("div");
 		$(addNew).addClass("col-xs-12");
 		$(addNew).addClass("bord");
+		$(addNew).addClass("insertBox");
 		var cone = document.createElement("div");
 		$(cone).addClass("col-md-8");
 		$(cone).html('<input type="text" class="form-control lower">');
@@ -96,27 +101,32 @@
 	function setTopic(){
 		prt = document.getElementById("section_two");
 		cv = 1;
+		fix = 1001;
 		//alert("setTopic");
-		initial();
+		initial(1001);
 	}
 	function initial(){
 		var el;
 		if(cv==1){
 			el = create(1);
 		}
-		else if(cv==2){
-			el = create(2);
-			$(prt).find("div.bord").remove();
-		}
-		else if(cv==3){
-			el = create(3);
-			$(prt).find("div.bord").remove();
+		else{
+			if(cv==2){
+				el = create(2);
+			}
+			else{
+				el = create(3);
+			}
+			$(prt).find("div.insertBox").remove();
 		}
 		$(prt).append(el);
 	}
 	function lowerPart(v,val){
 		
 		prt = $(v).parent().parent().parent();
+		var child = prt.children(".track");
+		fix = $(child).val();
+		alert(fix);
 		cv = val;
 		//prt.appendChild(addNew);
 		$(prt).append(constructor());
