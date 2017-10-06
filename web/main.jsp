@@ -26,7 +26,7 @@
 		</div>
 		<div id="section_two" class="col-xs-12 section_two" style="margin-top:10px">
 			<c:catch var="MyException">
-				<c:forEach var="topic" items="${requestScope.topics}">
+				<c:forEach var="topic" items="${requestScope['topics']}">
 					<div class="col-xs-12 adder">
 						<div class="col-xs-12 block">
 							<div class="col-xs-8">
@@ -64,7 +64,7 @@
 					</c:forEach>
 					</div>
 				</c:forEach>
-			</c:catch>
+			</c:catch>	
 		<c:if test="${MyException!=null}">
 			Exception: ${MyException.message}
 		</c:if>

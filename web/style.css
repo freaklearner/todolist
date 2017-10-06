@@ -18,6 +18,7 @@
 .adder{
 	/*border:1px solid black;
 	*/
+	padding-right:0px;
 }
 .block{
 	border:1px solid gray;
