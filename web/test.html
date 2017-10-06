@@ -108,6 +108,10 @@
 			//prt.appendChild(addNew);
 			$(prt).append(constructor());
 		}
+		function closex(v){
+			var el = $(v).parent().parent().parent();
+			el.remove();
+		}
 		function create(v){
 			var element = document.createElement("div");
 			$(element).addClass("adder");
@@ -121,7 +125,7 @@
 				$(cone).text(val);
 				var ctwo = document.createElement("div");
 				$(ctwo).addClass("col-md-4");
-				$(ctwo).html("<span class='glyphicon glyphicon-plus topAdder' onclick='lowerPart(this,2)'></span>")
+				$(ctwo).html("<span class='glyphicon glyphicon-plus topAdder' onclick='lowerPart(this,2);'></span><span class='glyphicon glyphicon-remove topAdder' onclick='closex(this);'></span>");
 				var box = document.createElement("div");
 				$(box).addClass("block");
 				$(box).addClass("col-md-12");
@@ -140,7 +144,7 @@
 				$(cone).text(val);
 				var ctwo = document.createElement("div");
 				$(ctwo).addClass("col-md-4");
-				$(ctwo).html("<span class='glyphicon glyphicon-plus topAdder' onclick='lowerPart(this,3)'></span>")
+				$(ctwo).html("<span class='glyphicon glyphicon-plus topAdder' onclick='lowerPart(this,3)'></span><span class='glyphicon glyphicon-remove topAdder' onclick='closex(this);'></span>")
 				var box = document.createElement("div");
 				$(box).addClass("block");
 				$(box).addClass("col-md-11");
@@ -152,16 +156,21 @@
 			}
 			else if(v==3){
 				var cone = document.createElement("div");
-				$(cone).addClass("col-md-12");
+				$(cone).addClass("col-md-10");
 				var val = $(".lower").val()+""; //document.getElementById("top").value;
 				//var txt = document.createTextNode(val)
 				//$(cone).append(txt);
 				$(cone).text(val);
+				var ctwo = document.createElement("div");
+				$(ctwo).addClass("col-md-2");
+				$(ctwo).html("<span class='glyphicon glyphicon-remove topAdder' onclick='closex(this);'></span>")
+				var box = document.createElement("div");
 				var box = document.createElement("div");
 				$(box).addClass("block");
 				$(box).addClass("col-md-9");
 				$(box).addClass("marg-s");
 				box.appendChild(cone);
+				box.appendChild(ctwo);
 				element.appendChild(box);
 				return element;
 			}
