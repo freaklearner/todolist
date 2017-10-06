@@ -5,9 +5,10 @@ import java.sql.*;
 import helper.*;
 
 public class eval{
+	Connection con;
+	PreparedStatement st;
 	public ArrayList<topic> inital(String driver, String path,int usr) throws SQLException,ClassNotFoundException{
-		Connection con;
-		PreparedStatement st;
+		Class.forName(driver);
 		Statement query,subQuery;
 		st = null;
 		query = null;
@@ -93,6 +94,84 @@ public class eval{
 			}
 		}
 		return list;
+	}
+	public int insert(String driver,String path,int id,String txt,int v) throws SQLException,ClassNotFoundException{
+		try{
+			Class.forName(driver);
+			con = DriverManager.getConnection(path);
+			if(v==1){
+				st = con.prepareStatement("insert into main(userId,txt) values(?,?)");
+			}
+			else if(v==2){
+				st = con.prepareStatement("insert into s_topic(topicId,stxt) values(?,?)");
+			}
+			else{
+				st = con.prepareStatement("insert into ss_topic(stopicId,sstxt) values(?,?)");
+			}
+			st.setInt(1,id);
+			st.setString(2,txt);
+			st.executeUpdate();
+			st.close();
+			con.close();
+			return(updatedValue(v));
+		}catch(SQLException ex){
+			throw ex;
+		}
+		catch(ClassNotFoundException ex){
+			throw ex;
+		}
+		finally{
+			if(st!=null){
+				st.close();
+			}
+			if(con!=null){
+				con.close();
+			}
+		}
+	}
+	int updatedValue(int v) throws SQLException{
+		int value=0;
+		try{
+			if(v==1){
+			st = con.prepareStatement("select top 1 topicId  from main order by topicId desc");
+			}
+			else if(v==2){
+				st = con.prepareStatement("select top 1 stopicId  from s_topic order by stopicId desc");
+			}
+			else{
+				st = con.prepareStatement("select top 1 sstopicId  from ss_topic order by sstopicId desc");
+			}
+			ResultSet rs = st.executeQuery();
+			if(v==1){
+				if(rs.next()){
+					value = rs.getInt("topicid");
+				}
+			}
+			else if(v==2){
+				if(rs.next()){
+					value = rs.getInt("stopicid");
+				}
+			}
+			else{
+				if(rs.next()){
+					value = rs.getInt("sstopicid");
+				}
+			}
+			rs.close();
+			st.close();
+			con.close();
+		}catch(SQLException ex){
+			throw ex;
+		}
+		finally{
+			if(st!=null){
+				st.close();
+			}
+			if(con!=null){
+				con.close();
+			}
+		}
+		return(value);
 	}
 	
 }
