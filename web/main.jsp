@@ -39,25 +39,24 @@
 						</div>
 					<c:forEach var="subone" items="${topic.sub}">
 						<div class="col-xs-12 adder">
-							<div class="col-xs-12 block">
+							<div class="col-xs-11 block marg-s">
 								<div class="col-xs-8">
 									${subone.data}
 								</div>
 								<div class="col-xs-4">
-									<span class='glyphicon glyphicon-plus topAdder' onclick='lowerPart(this,2);'></span>
+									<span class='glyphicon glyphicon-plus topAdder' onclick='lowerPart(this,3);'></span>
 									<span class='glyphicon glyphicon-remove topAdder' onclick='closex(this);'></span>
 								</div>
 							</div>
 						<c:forEach var="subtwo" items="${subone.sub}">
 							<div class="col-xs-12 adder">
-								<div class="col-xs-12 block">
-									<div class="col-xs-8">
+								<div class="col-xs-9 block marg-s">
+									<div class="col-xs-10">
 										${subtwo.data}
 									</div>
-								<div class="col-xs-4">
-									<span class='glyphicon glyphicon-plus topAdder' onclick='lowerPart(this,2);'>
-									</span><span class='glyphicon glyphicon-remove topAdder' onclick='closex(this);'></span>
-								</div>
+									<div class="col-xs-2">
+										<span class='glyphicon glyphicon-remove topAdder' onclick='closex(this);'></span>
+									</div>
 								</div>
 							</div>
 						</c:forEach>
