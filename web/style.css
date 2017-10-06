@@ -1,0 +1,33 @@
+*{
+	box-sizing:border-box;
+}
+.main{
+	border:1px solid gray;
+	margin-top:80px;
+	min-height:500px;
+	padding:0px;
+}
+.space{
+	margin:0px;
+	padding:0px;
+}
+.bord{
+	border:1px solid red;
+	
+}
+.adder{
+	/*border:1px solid black;
+	*/
+}
+.block{
+	border:1px solid gray;
+	margin: 5px 0px 5px 0px;
+}
+.topAdder{
+	cursor:pointer;
+	
+}
+.marg-s{
+	margin-left:10px;	
+	float:right;
+}
