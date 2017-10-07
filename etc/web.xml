@@ -7,7 +7,14 @@
 		<servlet-name>myservlet</servlet-name>
 		<url-pattern>/test</url-pattern>
 	</servlet-mapping>
-
+	<servlet>
+		<servlet-name>operate</servlet-name>
+		<servlet-class>com.operation</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>operate</servlet-name>
+		<url-pattern>/operate</url-pattern>
+	</servlet-mapping>
 	<context-param>
 		<param-name>driver</param-name>
 		<param-value>com.mysql.jdbc.Driver</param-value>

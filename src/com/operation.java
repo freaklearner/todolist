@@ -7,9 +7,9 @@ import javax.servlet.http.*;
 import java.io.*;
 
 public class operation extends HttpServlet{
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-	throws IOException,ServletException{
-		response.setContentType("text/html");
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException{
+		response.setContentType("text/plain");
+		//response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		eval obj = new eval();
 		String driver = (String)getServletContext().getInitParameter("driver");
@@ -20,9 +20,9 @@ public class operation extends HttpServlet{
 		int result;
 		try{
 			result = obj.insert(driver,path,id,str,value);
-			out.print(result);
+			out.write(result);
 		}catch(Exception ex){
-			out.print(ex);
+			out.write(ex.toString());
 		}
 	}
 }

@@ -12,7 +12,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
-<body>
+<body style="padding-bottom:10px;">
 	<div class="col-md-4 col-md-offset-4 main">
 		<div class="col-md-12 section_one bord">
 			<div class="col-md-12" style="margin-top:10px;">
@@ -76,10 +76,12 @@
 		</c:if>
 		</div>
 	</div>	
+	<div id="status">
+	</div>
 <script>
 	var prt;
 	var cv;
-	var fix;
+	var fix=0;
 	function constructor(){
 		var addNew = document.createElement("div");
 		$(addNew).addClass("col-xs-12");
@@ -103,12 +105,33 @@
 		cv = 1;
 		fix = 1001;
 		//alert("setTopic");
-		initial(1001);
+		initial();
+	}
+	function db(el){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onReadyStateChange = function(){
+			if(this.readyState == 4 && this.status == 202){
+				var child = el.children(".track");
+				var val = this.responseText;
+				$("div#status").text(val);
+				$(child).val(val);
+			}
+		};
+		xhttp.open("POST","operate",false);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		if(cv==1){
+			var t = $(".top").val();
+			var str = "id="+fix+"&val=1&txt="+t;
+			alert(str);
+			xhttp.send(str);
+		}
 	}
 	function initial(){
 		var el;
+		var id;
 		if(cv==1){
 			el = create(1);
+			id = db(el);
 		}
 		else{
 			if(cv==2){
@@ -122,7 +145,6 @@
 		$(prt).append(el);
 	}
 	function lowerPart(v,val){
-		
 		prt = $(v).parent().parent().parent();
 		var child = prt.children(".track");
 		fix = $(child).val();
@@ -197,7 +219,6 @@
 			element.appendChild(box);
 			return element;
 		}
-			
 	}
 </script>
 </body>

@@ -5,9 +5,10 @@ import java.sql.*;
 import helper.*;
 
 public class eval{
-	Connection con;
-	PreparedStatement st;
+	
 	public ArrayList<topic> inital(String driver, String path,int usr) throws SQLException,ClassNotFoundException{
+		Connection con;
+		PreparedStatement st;
 		Class.forName(driver);
 		Statement query,subQuery;
 		st = null;
@@ -96,6 +97,9 @@ public class eval{
 		return list;
 	}
 	public int insert(String driver,String path,int id,String txt,int v) throws SQLException,ClassNotFoundException{
+		Connection con = null;
+		PreparedStatement st = null;
+		int result;
 		try{
 			Class.forName(driver);
 			con = DriverManager.getConnection(path);
@@ -111,9 +115,9 @@ public class eval{
 			st.setInt(1,id);
 			st.setString(2,txt);
 			st.executeUpdate();
+			result = updatedValue(con,v);
 			st.close();
 			con.close();
-			return(updatedValue(v));
 		}catch(SQLException ex){
 			throw ex;
 		}
@@ -128,38 +132,44 @@ public class eval{
 				con.close();
 			}
 		}
+		return(result);
 	}
-	int updatedValue(int v) throws SQLException{
+	int updatedValue(Connection con,int v) throws SQLException{
+		//Connection con;
+		PreparedStatement st = null;
 		int value=0;
 		try{
+			//Class.forName(driver);
+			//con = DriverManager.getConnection(path);
 			if(v==1){
-			st = con.prepareStatement("select top 1 topicId  from main order by topicId desc");
+				st = con.prepareStatement("select topicId from main order by topicId desc limit 1");
 			}
 			else if(v==2){
-				st = con.prepareStatement("select top 1 stopicId  from s_topic order by stopicId desc");
+				st = con.prepareStatement("select stopicId from s_topic order by stopicId desc limit 1");
 			}
 			else{
-				st = con.prepareStatement("select top 1 sstopicId  from ss_topic order by sstopicId desc");
+				st = con.prepareStatement("select sstopicId from ss_topic order by sstopicId desc limit 1");
 			}
 			ResultSet rs = st.executeQuery();
 			if(v==1){
 				if(rs.next()){
-					value = rs.getInt("topicid");
+					value = rs.getInt("topicId");
 				}
 			}
 			else if(v==2){
 				if(rs.next()){
-					value = rs.getInt("stopicid");
+					value = rs.getInt("stopicId");
 				}
 			}
 			else{
 				if(rs.next()){
-					value = rs.getInt("sstopicid");
+					value = rs.getInt("sstopicId");
 				}
 			}
 			rs.close();
 			st.close();
-			con.close();
+			//con.close();
+			
 		}catch(SQLException ex){
 			throw ex;
 		}
@@ -168,7 +178,7 @@ public class eval{
 				st.close();
 			}
 			if(con!=null){
-				con.close();
+				//con.close();
 			}
 		}
 		return(value);
