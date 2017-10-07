@@ -13,6 +13,7 @@
 </head>
 
 <body style="padding-bottom:10px;">
+<p id="place">Id:</p>
 	<div class="col-md-4 col-md-offset-4 main">
 		<div class="col-md-12 section_one bord">
 			<div class="col-md-12" style="margin-top:10px;">
@@ -76,12 +77,11 @@
 		</c:if>
 		</div>
 	</div>	
-	<div id="status">
-	</div>
 <script>
 	var prt;
 	var cv;
 	var fix=0;
+	var result;
 	function constructor(){
 		var addNew = document.createElement("div");
 		$(addNew).addClass("col-xs-12");
@@ -108,37 +108,81 @@
 		initial();
 	}
 	function db(el){
-		var xhttp = new XMLHttpRequest();
+		/*var xhttp = new XMLHttpRequest();
+		var str;
+		alert("confirmed1");
 		xhttp.onReadyStateChange = function(){
-			if(this.readyState == 4 && this.status == 202){
-				var child = el.children(".track");
-				var val = this.responseText;
-				$("div#status").text(val);
-				$(child).val(val);
+			if(this.readyState == 4 && this.status == 200){
+				alert("confirmed3");
+				document.getElementById("place").innerHTML = this.responseText;
 			}
 		};
-		xhttp.open("POST","operate",false);
+		xhttp.open("POST","operate",true);
+		alert("confirmed2");
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		*/
 		if(cv==1){
 			var t = $(".top").val();
-			var str = "id="+fix+"&val=1&txt="+t;
+			str = "id="+fix+"&val=1&txt="+t;
 			alert(str);
-			xhttp.send(str);
+			$.post("operate",
+			{
+			  id:fix,
+			  val:1,
+			  txt:t
+			},
+			function(data,status){
+				//alert("Data: " + data + "\nStatus: " + status);
+				if(status=="success"){
+					alert(status);
+					result = data;
+					var ch = $(el).children(".track");
+					$(ch).val(result);
+					alert("Inside initial: "+result);
+				}
+			});
 		}
+		else{
+			var t = $(".lower").val();
+			str = "id="+fix+"&val="+cv+"&txt="+t;
+			alert(str);
+			$.post("operate",
+			{
+			  id:fix,
+			  val:cv,
+			  txt:t
+			},
+			function(data,status){
+				//alert("Data: " + data + "\nStatus: " + status);
+				if(status=="success"){
+					alert(status);
+					result = parseInt(data);
+					var ch = $(el).children(".track");
+					$(ch).val(result);
+					alert("Inside initial: "+result);
+				}
+			});
+		}
+		//xhttp.send(str);
 	}
 	function initial(){
 		var el;
-		var id;
 		if(cv==1){
 			el = create(1);
-			id = db(el);
+			//result = db();
+			db(el);
 		}
-		else{
+		else
+		{
 			if(cv==2){
 				el = create(2);
+				//result = db();
+				db(el);
 			}
 			else{
 				el = create(3);
+				//result = db();
+				db(el);
 			}
 			$(prt).find("div.insertBox").remove();
 		}
@@ -161,6 +205,7 @@
 		var element = document.createElement("div");
 		$(element).addClass("adder");
 		$(element).addClass("col-md-12");
+		$(element).html("<input type='hidden' class='track'>");
 		if(v==1){
 			var cone = document.createElement("div");
 			$(cone).addClass("col-md-8");
